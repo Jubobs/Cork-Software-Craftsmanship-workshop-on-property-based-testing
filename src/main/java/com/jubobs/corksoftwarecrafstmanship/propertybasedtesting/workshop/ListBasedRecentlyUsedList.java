@@ -46,6 +46,7 @@ public final class ListBasedRecentlyUsedList<T> implements RecentlyUsedList<T> {
 
     @Override
     public void push(T newHead) {
+        backingList.remove(newHead);
         backingList.add(0, newHead);
     }
 

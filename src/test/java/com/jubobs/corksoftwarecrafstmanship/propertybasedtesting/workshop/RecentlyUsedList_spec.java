@@ -15,6 +15,8 @@ import java.util.*;
 
 import static com.jubobs.corksoftwarecrafstmanship.propertybasedtesting.workshop.ListBasedRecentlyUsedList.newInstance;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.Assume.assumeThat;
 
 @RunWith(Enclosed.class)
 public final class RecentlyUsedList_spec {
@@ -86,10 +88,19 @@ public final class RecentlyUsedList_spec {
     @RunWith(JUnitQuickcheck.class)
     public static final class An_nonempty_list {
 
-        @Ignore
         @Property
-        public void is_unchanged_when_its_head_item_is_re_added() {
+        public void is_unchanged_when_its_head_item_is_re_added(
+            @InRange(minInt = 1) int capacity,
+            Set<String> items) {
+                assumeThat(items.size(), greaterThan(1));
 
+                RecentlyUsedList<String> rul = recentlyUsedListBuiltFrom(capacity, items);
+                String head = rul.elementAt(0);
+
+                rul.push(head);
+
+                RecentlyUsedList<String> expected = recentlyUsedListBuiltFrom(capacity, items);
+                assertThat(rul).isEqualTo(expected);
         }
 
     }

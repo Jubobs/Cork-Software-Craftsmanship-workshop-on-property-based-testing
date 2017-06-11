@@ -127,10 +127,16 @@ public final class RecentlyUsedList_spec {
 
         }
 
-        @Ignore
         @Property
-        public void that_gets_cleared_yields_an_empty_list_of_the_same_capacity() {
+        public void that_gets_cleared_yields_an_empty_list_of_the_same_capacity(
+            @InRange(minInt = 1) int capacity,
+            Set<String> items) {
+                RecentlyUsedList<String> rul = recentlyUsedListBuiltFrom(capacity, items);
 
+                rul.clear();
+
+                assertThat(rul.isEmpty()).isTrue();
+                assertThat(rul.size()).isEqualTo(0);
         }
 
         @Ignore

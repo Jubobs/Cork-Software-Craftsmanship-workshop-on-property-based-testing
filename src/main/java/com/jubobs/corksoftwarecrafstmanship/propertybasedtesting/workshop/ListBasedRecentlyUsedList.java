@@ -1,10 +1,12 @@
 package com.jubobs.corksoftwarecrafstmanship.propertybasedtesting.workshop;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class ListBasedRecentlyUsedList<T> implements RecentlyUsedList<T> {
 
     private final int capacity;
+    private final List<T> backingList;
 
     private ListBasedRecentlyUsedList(int capacity) {
         if (capacity < 1) {
@@ -13,6 +15,7 @@ public final class ListBasedRecentlyUsedList<T> implements RecentlyUsedList<T> {
         }
 
         this.capacity = capacity;
+        this.backingList = new ArrayList<>();
     }
 
     public static <T> ListBasedRecentlyUsedList<T> newInstance(int capacity) {
@@ -21,12 +24,12 @@ public final class ListBasedRecentlyUsedList<T> implements RecentlyUsedList<T> {
 
     @Override
     public boolean isEmpty() {
-        return true;
+        return backingList.isEmpty();
     }
 
     @Override
     public int size() {
-        return 0;
+        return backingList.size();
     }
 
     @Override
@@ -41,12 +44,12 @@ public final class ListBasedRecentlyUsedList<T> implements RecentlyUsedList<T> {
 
     @Override
     public void push(T newHead) {
-
+        backingList.add(newHead);
     }
 
     @Override
     public T elementAt(int index) {
-        return null;
+        return backingList.get(index);
     }
 
     @Override

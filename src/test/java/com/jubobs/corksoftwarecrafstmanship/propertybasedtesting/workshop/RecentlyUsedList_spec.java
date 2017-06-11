@@ -139,10 +139,14 @@ public final class RecentlyUsedList_spec {
                     .verify();
         }
 
-        @Ignore
         @Property
-        public void has_a_sensible_toString_implementation() {
+        public void has_a_sensible_toString_implementation(
+                @InRange(minInt = 1) int capacity,
+                Set<String> items) {
+            RecentlyUsedList<String> rul = recentlyUsedListBuiltFrom(capacity, items);
 
+            String expected = String.format("RecentlyUsedList%s", rul.toList());
+            assertThat(rul.toString()).isEqualTo(expected);
         }
 
     }

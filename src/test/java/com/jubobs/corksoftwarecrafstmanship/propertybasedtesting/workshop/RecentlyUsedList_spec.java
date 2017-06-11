@@ -108,10 +108,17 @@ public final class RecentlyUsedList_spec {
     @RunWith(JUnitQuickcheck.class)
     public static final class Any_list {
 
-        @Ignore
-        @Property
-        public void rejects_the_addition_of_a_null_item() {
+        @Rule
+        public final ExpectedException thrown = ExpectedException.none();
 
+        @Property
+        public void rejects_the_addition_of_a_null_item(
+            @InRange(minInt = 1) int capacity,
+            Set<String> items) {
+                RecentlyUsedList<String> rul = recentlyUsedListBuiltFrom(capacity, items);
+
+                thrown.expect(NullPointerException.class);
+                rul.push(null);
         }
 
         @Ignore

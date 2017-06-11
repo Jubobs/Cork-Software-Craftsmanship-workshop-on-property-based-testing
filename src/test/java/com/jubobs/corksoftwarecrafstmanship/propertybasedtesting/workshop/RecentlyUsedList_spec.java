@@ -151,10 +151,15 @@ public final class RecentlyUsedList_spec {
             }
         }
 
-        @Ignore
         @Property
-        public void rejects_negative_indexing() {
+        public void rejects_negative_indexing(
+            @InRange(minInt = 1) int capacity,
+            Set<String> items,
+            @InRange(maxInt = -1) int index) {
+                RecentlyUsedList<String> rul = recentlyUsedListBuiltFrom(capacity, items);
 
+                thrown.expect(IndexOutOfBoundsException.class);
+                rul.elementAt(index);
         }
 
         @Ignore

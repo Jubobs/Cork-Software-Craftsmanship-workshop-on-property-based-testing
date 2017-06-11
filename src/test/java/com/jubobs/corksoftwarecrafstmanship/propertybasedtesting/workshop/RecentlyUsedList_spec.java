@@ -10,6 +10,8 @@ import org.junit.experimental.runners.Enclosed;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
+import java.util.*;
+
 import static com.jubobs.corksoftwarecrafstmanship.propertybasedtesting.workshop.ListBasedRecentlyUsedList.newInstance;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -63,10 +65,19 @@ public final class RecentlyUsedList_spec {
                 assertThat(rul.elementAt(0)).isEqualTo(element);
         }
 
-        @Ignore
         @Property
-        public void retains_unique_additions_in_stack_order_up_to_its_capacity() {
+        public void retains_unique_additions_in_stack_order_up_to_its_capacity(
+                @InRange(minInt = 1) int capacity,
+                Set<String> uniqueItems) {
+            RecentlyUsedList<String> rul = recentlyUsedListBuiltFrom(capacity, uniqueItems);
 
+            assertThat(rul.size()).isEqualTo(uniqueItems.size());
+
+            List<String> copy = new ArrayList<>(uniqueItems);
+            Collections.reverse(copy);
+            int toIndex = Math.min(uniqueItems.size(), rul.capacity());
+            List<String> expected = copy.subList(0, toIndex);
+            assertThat(rul.toList()).isEqualTo(expected);
         }
 
     }
@@ -133,6 +144,14 @@ public final class RecentlyUsedList_spec {
 
         }
 
+    }
+
+    private static <T> RecentlyUsedList<T> recentlyUsedListBuiltFrom(
+            int capacity,
+            Collection<T> items) {
+        RecentlyUsedList<T> rul = newInstance(capacity);
+        items.forEach(rul::push);
+        return rul;
     }
 
 }

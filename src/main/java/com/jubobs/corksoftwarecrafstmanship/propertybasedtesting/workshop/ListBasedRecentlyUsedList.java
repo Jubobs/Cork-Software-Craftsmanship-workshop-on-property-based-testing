@@ -1,6 +1,7 @@
 package com.jubobs.corksoftwarecrafstmanship.propertybasedtesting.workshop;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class ListBasedRecentlyUsedList<T> implements RecentlyUsedList<T> {
@@ -44,7 +45,7 @@ public final class ListBasedRecentlyUsedList<T> implements RecentlyUsedList<T> {
 
     @Override
     public void push(T newHead) {
-        backingList.add(newHead);
+        backingList.add(0, newHead);
     }
 
     @Override
@@ -54,7 +55,7 @@ public final class ListBasedRecentlyUsedList<T> implements RecentlyUsedList<T> {
 
     @Override
     public List<T> toList() {
-        return null;
+        return Collections.unmodifiableList(backingList);
     }
 
 }

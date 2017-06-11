@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import static com.jubobs.corksoftwarecrafstmanship.propertybasedtesting.workshop.ListBasedRecentlyUsedList.newInstance;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Enclosed.class)
 public final class RecentlyUsedList_spec {
@@ -28,10 +29,12 @@ public final class RecentlyUsedList_spec {
             newInstance(capacity);
         }
 
-        @Ignore
         @Property
-        public void can_be_instantiated_with_a_positive_capacity() {
+        public void can_be_instantiated_with_a_positive_capacity(
+            @InRange(minInt = 1) int capacity) {
+                RecentlyUsedList<String> rul = newInstance(capacity);
 
+                assertThat(rul.capacity()).isEqualTo(capacity);
         }
 
         @Ignore

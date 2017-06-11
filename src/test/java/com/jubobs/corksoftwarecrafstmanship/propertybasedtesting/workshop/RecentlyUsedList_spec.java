@@ -37,10 +37,13 @@ public final class RecentlyUsedList_spec {
                 assertThat(rul.capacity()).isEqualTo(capacity);
         }
 
-        @Ignore
         @Property
-        public void is_empty() {
+        public void is_empty(
+            @InRange(minInt = 1) int capacity) {
+                RecentlyUsedList<?> rul = newInstance(capacity);
 
+                assertThat(rul.isEmpty()).isTrue();
+                assertThat(rul.size()).isEqualTo(0);
         }
 
     }

@@ -16,6 +16,7 @@ import java.util.*;
 import static com.jubobs.corksoftwarecrafstmanship.propertybasedtesting.workshop.ListBasedRecentlyUsedList.newInstance;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.junit.Assume.assumeThat;
 
 @RunWith(Enclosed.class)
@@ -162,10 +163,16 @@ public final class RecentlyUsedList_spec {
                 rul.elementAt(index);
         }
 
-        @Ignore
         @Property
-        public void rejects_indexing_past_its_end() {
+        public void rejects_indexing_past_its_end(
+                @InRange(minInt = 1) int capacity,
+                Set<String> items,
+                int index) {
+            assumeThat(index, greaterThanOrEqualTo(items.size()));
 
+            RecentlyUsedList<String> rul = recentlyUsedListBuiltFrom(capacity, items);
+            thrown.expect(IndexOutOfBoundsException.class);
+            rul.elementAt(index);
         }
 
         @Test

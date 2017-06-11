@@ -3,6 +3,7 @@ package com.jubobs.corksoftwarecrafstmanship.propertybasedtesting.workshop;
 import com.pholser.junit.quickcheck.Property;
 import com.pholser.junit.quickcheck.generator.InRange;
 import com.pholser.junit.quickcheck.runner.JUnitQuickcheck;
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -132,10 +133,10 @@ public final class RecentlyUsedList_spec {
 
         }
 
-        @Ignore
         @Test
         public void satisfies_the_equals_hashCode_contract() {
-
+            EqualsVerifier.forClass(ListBasedRecentlyUsedList.class)
+                    .verify();
         }
 
         @Ignore

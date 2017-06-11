@@ -41,7 +41,7 @@ public final class ListBasedRecentlyUsedList<T> implements RecentlyUsedList<T> {
 
     @Override
     public void clear() {
-
+        backingList.clear();
     }
 
     @Override

@@ -4,11 +4,15 @@ import java.util.List;
 
 public final class ListBasedRecentlyUsedList<T> implements RecentlyUsedList<T> {
 
+    private final int capacity;
+
     private ListBasedRecentlyUsedList(int capacity) {
         if (capacity < 1) {
             String msg = String.format("nonpositive capacity: %d", capacity);
             throw new IllegalArgumentException(msg);
         }
+
+        this.capacity = capacity;
     }
 
     public static <T> ListBasedRecentlyUsedList<T> newInstance(int capacity) {
@@ -27,7 +31,7 @@ public final class ListBasedRecentlyUsedList<T> implements RecentlyUsedList<T> {
 
     @Override
     public int capacity() {
-        return 0;
+        return capacity;
     }
 
     @Override

@@ -51,10 +51,16 @@ public final class RecentlyUsedList_spec {
     @RunWith(JUnitQuickcheck.class)
     public static final class An_empty_list {
 
-        @Ignore
         @Property
-        public void retains_a_single_addition() {
+        public void retains_a_single_addition(
+            @InRange(minInt = 1) int capacity,
+            String element) {
+                RecentlyUsedList<String> rul = newInstance(capacity);
 
+                rul.push(element);
+
+                assertThat(rul.size()).isEqualTo(1);
+                assertThat(rul.elementAt(0)).isEqualTo(element);
         }
 
         @Ignore

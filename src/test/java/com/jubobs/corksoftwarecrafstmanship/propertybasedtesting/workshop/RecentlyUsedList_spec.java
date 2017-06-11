@@ -139,10 +139,16 @@ public final class RecentlyUsedList_spec {
                 assertThat(rul.size()).isEqualTo(0);
         }
 
-        @Ignore
         @Property
-        public void allows_indexing_within_its_bounds() {
+        public void allows_indexing_within_its_bounds(
+                @InRange(minInt = 1) int capacity,
+                Set<String> items) {
+            RecentlyUsedList<String> rul = recentlyUsedListBuiltFrom(capacity, items);
 
+            List<String> list = rul.toList();
+            for (int i = 0, hi = rul.size(); i < hi; i++) {
+                assertThat(rul.elementAt(i)).isEqualTo(list.get(i));
+            }
         }
 
         @Ignore

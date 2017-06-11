@@ -4,7 +4,6 @@ import com.pholser.junit.quickcheck.Property;
 import com.pholser.junit.quickcheck.generator.InRange;
 import com.pholser.junit.quickcheck.runner.JUnitQuickcheck;
 import nl.jqno.equalsverifier.EqualsVerifier;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -122,10 +121,30 @@ public final class RecentlyUsedList_spec {
                 rul.push(null);
         }
 
-        @Ignore
         @Property
-        public void of_at_least_two_items_moves_a_non_head_item_to_head_when_that_item_is_re_added() {
+        public void of_at_least_two_items_moves_a_non_head_item_to_head_when_that_item_is_re_added(
+                @InRange(minInt = 1) int capacity,
+                Set<String> items) {
+            assumeThat(items.size() , greaterThanOrEqualTo(2));
 
+            RecentlyUsedList<String> rul = recentlyUsedListBuiltFrom(capacity, items);
+            int index = new Random().nextInt(rul.size()); // not ideal :'(
+            String nonHeadItem = rul.elementAt(index);
+
+            rul.push(nonHeadItem);
+
+            assertThat(rul.elementAt(0)).isEqualTo(nonHeadItem);
+
+            RecentlyUsedList<String> initialRul = recentlyUsedListBuiltFrom(capacity, items);
+            // All elements up to the nonhead item have been shifted to the right
+            for (int i = 1; i <= index; i++) {
+                assertThat(rul.elementAt(i)).isEqualTo(initialRul.elementAt(i - 1));
+            }
+
+            // All elements after the nonhead item have not moved
+            for (int i = index + 1; i < rul.size(); i++) {
+                assertThat(rul.elementAt(i)).isEqualTo(initialRul.elementAt(i));
+            }
         }
 
         @Property

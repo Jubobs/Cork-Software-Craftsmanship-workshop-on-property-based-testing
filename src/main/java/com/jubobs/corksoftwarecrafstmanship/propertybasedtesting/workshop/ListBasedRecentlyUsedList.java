@@ -78,5 +78,10 @@ public final class ListBasedRecentlyUsedList<T> implements RecentlyUsedList<T> {
         return Objects.hash(capacity, backingList);
     }
 
+    @Override
+    public String toString() {
+        return String.format("RecentlyUsedList%s", backingList);
+    }
+
 }
 

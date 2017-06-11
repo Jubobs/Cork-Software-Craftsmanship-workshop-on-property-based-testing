@@ -3,6 +3,7 @@ package com.jubobs.corksoftwarecrafstmanship.propertybasedtesting.workshop;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public final class ListBasedRecentlyUsedList<T> implements RecentlyUsedList<T> {
 
@@ -56,6 +57,25 @@ public final class ListBasedRecentlyUsedList<T> implements RecentlyUsedList<T> {
     @Override
     public List<T> toList() {
         return Collections.unmodifiableList(backingList);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof ListBasedRecentlyUsedList)) {
+            return false;
+        }
+
+        ListBasedRecentlyUsedList that = (ListBasedRecentlyUsedList) obj;
+        return capacity == that.capacity &&
+                Objects.equals(backingList, that.backingList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(capacity, backingList);
     }
 
 }

@@ -1,4 +1,4 @@
-# Drive the design of a Recently Used List using properties!
+# Drive the design of a Recently-Used List using properties!
 
 [![Build Status](https://travis-ci.org/Jubobs/Cork-Software-Craftsmanship-workshop-on-property-based-testing.svg?branch=solutions)](https://travis-ci.org/Jubobs/Cork-Software-Craftsmanship-workshop-on-property-based-testing)
 
